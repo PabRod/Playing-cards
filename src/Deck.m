@@ -38,18 +38,48 @@ classdef Deck < handle
         
         %% Accessors
         function rank = GetRank(obj, card_id)
+            %GETRANK Returns the rank of the card(s) identified by the
+            %card_id(s)
+            
+            % Use modular arithmetics to identify the rank using only the
+            % id
             ranks_index = rem(card_id, numel(obj.ranks));
             ranks_index(ranks_index == 0) = numel(obj.ranks);
             
-            rank = obj.ranks{ranks_index};
+            % Extract the information
+            rank = cell(1, numel(ranks_index));
+            for i = 1:numel(ranks_index) % The loop allows card_id to ve a vector
+                if card_id(i) <= obj.nCards - obj.nJokers
+                    rank{i} = obj.ranks{ranks_index(i)};
+                else
+                    rank{i} = '';
+                end
+            end
         end
         
         function suit = GetSuit(obj, card_id)
+            %GETSUIT Returns the suit of the card(s) identified by the
+            %card_id(s)
+            
+            % Use modular arithmetics to identify the suit using only the
+            % id
             suits_index = ceil(card_id./numel(obj.ranks));
-            suit = obj.suits{suits_index};
+            
+            % Extract the information
+            suit = cell(1, numel(suits_index));
+            for i = 1:numel(suits_index) % The loop allows card_id to ve a vector
+                if card_id(i) <= obj.nCards - obj.nJokers
+                    suit{i} = obj.suits{suits_index(i)};
+                else
+                    suit{i} = 'Joker';
+                end
+            end
         end
         
-        function name = GetName(obj, card_id)            
+        function name = GetName(obj, card_id)
+            %GETSUIT Returns the name of the card(s) identified by the
+            %card_id(s), in a human-readable fashion
+            
             rank = obj.GetRank(card_id);
             suit = obj.GetSuit(card_id);
 
