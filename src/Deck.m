@@ -3,17 +3,18 @@ classdef Deck < handle
     %   Most playing cards' decks (poker, italian, spanish, ...)
     %   have the same underlying structure.
     
-    properties
-        orderVector; % TODO: Move to private
+    properties(GetAccess = public, SetAccess = private)
+        orderVector;
         
-        ranks;
-        suits;
-        nJokers;
+        ranks; % Ace, 2, 3, ...
+        suits; % Spades, Hearts, ...
         
-        nCards;
+        nJokers; % Number of jokers
+        nCards; % Total number of cards
     end
     
-    methods
+    methods(Access = public)
+        
         %% Constructor
         function obj = Deck(file)
             %DECK Main constructor
@@ -29,7 +30,10 @@ classdef Deck < handle
             obj.nCards = numel(obj.ranks)*numel(obj.suits) + obj.nJokers;
             
             % Represent each card by an integer
-            obj.orderVector = 1:obj.nCards;
+            [rows, cols] = obj.Dimensions();
+            vector = NaN(1, rows*cols); % If jokers are present, nCards ~= rows*cols. Some spaces might be filled by NaNs
+            vector(1:obj.nCards) = 1:obj.nCards;
+            obj.orderVector = reshape(vector, rows, cols);
         end
         
         %% Accessors
@@ -55,7 +59,17 @@ classdef Deck < handle
         %% Methods
         function Shuffle(obj)
             %SHUFFLE Random shuffle
-            obj.orderVector = randperm(obj.nCards);
+            obj.orderVector = reshape(randperm(obj.nCards), [numel(obj.ranks), numel(obj.suits)]);
+        end
+        
+        function [rows, cols] = Dimensions(obj)
+            %DIMENSIONS returns the dimensions of the deck
+            
+            % Ace, two, ... represent the row
+            rows = numel(obj.ranks);
+            
+            % Spades, hearts, ... represent the column
+            cols = numel(obj.suits) + ceil(obj.nJokers./numel(obj.ranks));
         end
         
         %TODO: Draw
