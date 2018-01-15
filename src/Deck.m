@@ -59,7 +59,10 @@ classdef Deck < handle
         %% Methods
         function Shuffle(obj)
             %SHUFFLE Random shuffle
-            obj.orderVector = reshape(randperm(obj.nCards), [numel(obj.ranks), numel(obj.suits)]);
+            [rows, cols] = Dimensions(obj);
+            vector = NaN(1, rows*cols);
+            vector(1:obj.nCards) = randperm(obj.nCards);
+            obj.orderVector = reshape(vector, rows, cols);
         end
         
         function [rows, cols] = Dimensions(obj)
