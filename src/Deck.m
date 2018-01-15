@@ -11,6 +11,7 @@ classdef Deck < handle
         
         nJokers; % Number of jokers
         nCards; % Total number of cards
+        rCards; % Number of remaining cards
     end
     
     methods(Access = public)
@@ -28,6 +29,7 @@ classdef Deck < handle
             
             % Count the number of cards
             obj.nCards = numel(obj.ranks)*numel(obj.suits) + obj.nJokers;
+            obj.rCards = obj.nCards;
             
             % Represent each card by an integer
             [rows, cols] = obj.Dimensions();
@@ -109,9 +111,8 @@ classdef Deck < handle
             %DRAW Draw n cards from the deck
             
             % Avoid trying to draw more cards than the number available
-            n_remaining_cards = sum(~isnan(obj.orderVector(:)));
-            if n > n_remaining_cards
-                error('The number of remaining cards is: %i', n_remaining_cards);
+            if n > obj.rCards
+                error('The number of remaining cards is: %i', obj.rCards);
             end
             
             % Draw the cards
@@ -123,6 +124,7 @@ classdef Deck < handle
             obj.orderVector(1:n) = NaN; % Remove
             obj.orderVector(1:rows*cols - n) = obj.orderVector(n+1:end); % Shift
             obj.orderVector(obj.nCards - n + 1:end) = NaN;
+            obj.rCards = sum(~isnan(obj.orderVector(:)));
         end
         
         %TODO: Deal
