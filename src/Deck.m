@@ -105,7 +105,25 @@ classdef Deck < handle
             cols = numel(obj.suits) + ceil(obj.nJokers./numel(obj.ranks));
         end
         
-        %TODO: Draw
+        function [names, ids] = Draw(obj, n)
+            %DRAW Draw n cards from the deck
+            
+            % Avoid trying to draw more cards than the number available
+            n_remaining_cards = sum(~isnan(obj.orderVector(:)));
+            if n > n_remaining_cards
+                error('The number of remaining cards is: %i', n_remaining_cards);
+            end
+            
+            % Draw the cards
+            ids = obj.orderVector(1:n); % Card identifier
+            names = obj.GetName(ids); % Card human-friendly name
+            
+            % Remove the drawn cards from the deck
+            obj.orderVector(1:n) = NaN; % Remove
+            obj.orderVector(1:obj.nCards - n) = obj.orderVector(n+1:end); % Shift
+            obj.orderVector(obj.nCards - n + 1:end) = NaN;
+        end
+        
         %TODO: Deal
         %TODO: Add/Remove
         %TODO: Plot
