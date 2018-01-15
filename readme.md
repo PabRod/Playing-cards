@@ -19,3 +19,14 @@ pDeck.GetName([4, 17]);
 
 % Returns: {'4-Spades', '4-Hearts'}
 ```
+
+### Use the deck
+```
+%% Shuffle the deck
+pDeck.Shuffle();
+
+%% Draw the two first cards
+drawnCards = pDeck.Draw(2);
+
+% Returns, for instance: {'4-Clubs', 'K-Hearts'}
+```
