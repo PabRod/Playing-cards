@@ -119,8 +119,9 @@ classdef Deck < handle
             names = obj.GetName(ids); % Card human-friendly name
             
             % Remove the drawn cards from the deck
+            [rows, cols] = Dimensions(obj);
             obj.orderVector(1:n) = NaN; % Remove
-            obj.orderVector(1:obj.nCards - n) = obj.orderVector(n+1:end); % Shift
+            obj.orderVector(1:rows*cols - n) = obj.orderVector(n+1:end); % Shift
             obj.orderVector(obj.nCards - n + 1:end) = NaN;
         end
         
