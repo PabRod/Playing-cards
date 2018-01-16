@@ -26,12 +26,17 @@ assert(dDeck.nJokers == 2);
 %% Shuffle
 pDeck = Deck(path_poker);
 
+% Check that, by default, the deck is ordered
 expected_order = 1:54;
 assert(sum(expected_order == pDeck.orderVector(1:54)) == 54);
 
+% Check that only order changes after shuffling
 pDeck.Shuffle();
 assert(sum(expected_order == pDeck.orderVector(1:54)) < 54);
+assert(pDeck.nCards == 54);
+assert(pDeck.rCards == 54);
 
+% Check that order and number of remaining cards change after shuffling
 pDeck.Draw(2);
 pDeck.Shuffle();
 assert(pDeck.nCards == 54);
@@ -40,26 +45,38 @@ assert(sum(expected_order(1:52) == pDeck.orderVector(1:52)) < 52);
 
 
 %% Draw
-% Check that it draws as expected
 pDeck = Deck(path_poker);
+
+% Check that it draws as expected
 [drawnCards_names, drawCards_ids] = pDeck.Draw(3);
 
 expected_names = {'1-Spades', '2-Spades', '3-Spades'};
 expected_ids = [1, 2, 3];
-
 assert(sum(expected_ids == drawCards_ids) == 3);
 for i = 1:3
     assert(strcmp(expected_names{i}, drawnCards_names{i}));
 end
 
+% Check how the number of cards changes after drawing
 assert(pDeck.nCards == 54);
 assert(pDeck.rCards == 51);
 
-% Try error messages
+% Check error messages
 try
     pDeck.Draw(100);
     assert(false, 'Exception failed to be thrown');
 catch me
     expectedError = 'Deck:Draw:OutOfCards';
     assert(strcmp(me.identifier, expectedError));
+end
+
+%% PlotOrder
+pDeck = Deck(path_poker);
+
+% Just check if it works
+try
+    pDeck.PlotOrder();
+    close gcf;
+catch me
+    assert(false, 'Something went wrong with PlotOrder');
 end
