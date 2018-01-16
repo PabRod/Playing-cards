@@ -32,6 +32,13 @@ assert(sum(expected_order == pDeck.orderVector(1:54)) == 54);
 pDeck.Shuffle();
 assert(sum(expected_order == pDeck.orderVector(1:54)) < 54);
 
+pDeck.Draw(2);
+pDeck.Shuffle();
+assert(pDeck.nCards == 54);
+assert(pDeck.rCards == 52);
+assert(sum(expected_order(1:52) == pDeck.orderVector(1:52)) < 52);
+
+
 %% Draw
 pDeck = Deck(path_poker);
 [drawnCards_names, drawCards_ids] = pDeck.Draw(3);
@@ -43,3 +50,11 @@ assert(sum(expected_ids == drawCards_ids) == 3);
 for i = 1:3
     assert(strcmp(expected_names{i}, drawnCards_names{i}));
 end
+
+% try
+%     PathIntegral(field, curve, tmin, tmax); % 4 input arguments requires symbolic input
+%     assert(false, 'Exception failed to be thrown');
+% catch me
+%     expectedError = 'PathIntegralSymbolic:SymArginRequired';
+%     assert(strcmp(me.identifier, expectedError));
+% end

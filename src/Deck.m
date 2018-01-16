@@ -95,7 +95,7 @@ classdef Deck < handle
             %SHUFFLE Random shuffle
             [rows, cols] = Dimensions(obj);
             vector = NaN(1, rows*cols);
-            vector(1:obj.nCards) = randperm(obj.nCards);
+            vector(1:obj.rCards) = randperm(obj.rCards);
             obj.orderVector = reshape(vector, rows, cols);
         end
         
