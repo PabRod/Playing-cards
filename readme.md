@@ -1,5 +1,8 @@
 # Playing cards
 
+## Motivation
+Most playing cards' decks (poker, italian, spanish, ...) have the same underlying structure: that of an ordered vector. This makes playing card decks a very good example for teaching object oriented programming.
+
 ## Example of use
 
 ### Load a deck
