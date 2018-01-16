@@ -1,7 +1,9 @@
 classdef Deck < handle
     %DECK Class representing a playing cards' deck
     %   Most playing cards' decks (poker, italian, spanish, ...)
-    %   have the same underlying structure.
+    %   have the same underlying structure: that of an ordered vector. This
+    %   makes playing card decks a very good example for teaching objected
+    %   oriented programming
     
     properties(GetAccess = public, SetAccess = private)
         orderVector;
@@ -19,7 +21,7 @@ classdef Deck < handle
         %% Constructor
         function obj = Deck(file)
             %DECK Main constructor
-            %   Example: pokerDeck = Deck('decks/poker.mat');
+            %   Example: pokerDeck = Deck('decks/poker/poker_deck.mat');
             
             % Load the file containing the deck's properties
             load(file, 'ranks', 'suits', 'nJokers');
@@ -79,7 +81,7 @@ classdef Deck < handle
         end
         
         function name = GetName(obj, card_id)
-            %GETSUIT Returns the name of the card(s) identified by the
+            %GETNAME Returns the name of the card(s) identified by the
             %card_id(s), in a human-readable fashion
             
             rank = obj.GetRank(card_id);
