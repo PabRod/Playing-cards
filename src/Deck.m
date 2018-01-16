@@ -114,7 +114,8 @@ classdef Deck < handle
             
             % Avoid trying to draw more cards than the number available
             if n > obj.rCards
-                error('The number of remaining cards is: %i', obj.rCards);
+                msgId = 'Deck:Draw:OutOfCards';
+                error(msgId, 'The number of remaining cards is: %i', obj.rCards);
             end
             
             % Draw the cards

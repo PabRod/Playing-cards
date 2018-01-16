@@ -40,6 +40,7 @@ assert(sum(expected_order(1:52) == pDeck.orderVector(1:52)) < 52);
 
 
 %% Draw
+% Check that it draws as expected
 pDeck = Deck(path_poker);
 [drawnCards_names, drawCards_ids] = pDeck.Draw(3);
 
@@ -51,10 +52,14 @@ for i = 1:3
     assert(strcmp(expected_names{i}, drawnCards_names{i}));
 end
 
-% try
-%     PathIntegral(field, curve, tmin, tmax); % 4 input arguments requires symbolic input
-%     assert(false, 'Exception failed to be thrown');
-% catch me
-%     expectedError = 'PathIntegralSymbolic:SymArginRequired';
-%     assert(strcmp(me.identifier, expectedError));
-% end
+assert(pDeck.nCards == 54);
+assert(pDeck.rCards == 51);
+
+% Try error messages
+try
+    pDeck.Draw(100);
+    assert(false, 'Exception failed to be thrown');
+catch me
+    expectedError = 'Deck:Draw:OutOfCards';
+    assert(strcmp(me.identifier, expectedError));
+end
