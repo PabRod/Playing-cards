@@ -129,6 +129,25 @@ classdef Deck < handle
             obj.rCards = sum(~isnan(obj.orderVector(:)));
         end
         
+        function PlotOrder(obj)
+            %PLOTORDER creates a visualization of the deck's order
+            
+            % Aesthetic properties
+            size = 4;
+            color = 'red';
+            
+            % Plot
+            positionVector = 1:obj.rCards;
+            scatter(positionVector, obj.orderVector(1:obj.rCards), size, color, 'filled');
+            
+            % Fine tuning
+            xlim([1, obj.rCards]);
+            ylim([1, obj.nCards]);
+            title('Order visualization');
+            xlabel('Position');
+            ylabel('Id');
+        end
+        
         %TODO: Deal
         %TODO: Add/Remove
         %TODO: Plot
