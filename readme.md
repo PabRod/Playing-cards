@@ -3,6 +3,8 @@
 ## Motivation
 Most playing cards' decks (poker, italian, spanish, ...) have the same underlying structure: that of an ordered vector. This makes playing card decks a very good example for teaching object oriented programming.
 
+Provided a card game can be understood as _one deck + some rules_, inheritance can be used to create sub-classes for simple card games.
+
 ## Example of use
 
 ### Load a deck
