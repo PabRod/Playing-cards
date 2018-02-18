@@ -47,8 +47,7 @@ classdef Deck < handle
             
             % Use modular arithmetics to identify the rank using only the
             % id
-            ranks_index = rem(card_id, numel(obj.ranks));
-            ranks_index(ranks_index == 0) = numel(obj.ranks);
+            [ranks_index, ~] = ind2sub(size(obj.orderVector), card_id);
             
             % Extract the information
             rank = cell(1, numel(ranks_index));
@@ -67,7 +66,7 @@ classdef Deck < handle
             
             % Use modular arithmetics to identify the suit using only the
             % id
-            suits_index = ceil(card_id./numel(obj.ranks));
+            [~, suits_index] = ind2sub(size(obj.orderVector), card_id);
             
             % Extract the information
             suit = cell(1, numel(suits_index));

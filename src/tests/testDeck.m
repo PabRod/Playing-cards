@@ -43,6 +43,17 @@ assert(pDeck.nCards == 54);
 assert(pDeck.rCards == 52);
 assert(sum(expected_order(1:52) == pDeck.orderVector(1:52)) < 52);
 
+%% Get name
+pDeck = Deck(path_poker);
+
+% Check that the relations index-names are ok
+card_ids = [12, 13, 14];
+expected_names = {'Q-Spades', 'K-Spades', '1-Hearts'};
+drawnCards_names = pDeck.GetName(card_ids);
+
+for i = 1:3
+    assert(strcmp(expected_names{i}, drawnCards_names{i}));
+end
 
 %% Draw
 pDeck = Deck(path_poker);
