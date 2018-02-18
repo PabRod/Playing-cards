@@ -41,40 +41,40 @@ classdef Deck < handle
         end
         
         %% Accessors
-        function rank = GetRank(obj, card_id)
+        function [ranks, ranks_id] = GetRank(obj, card_id)
             %GETRANK Returns the rank of the card(s) identified by the
             %card_id(s)
             
             % Use modular arithmetics to identify the rank using only the
             % id
-            [ranks_index, ~] = ind2sub(size(obj.orderVector), card_id);
+            [ranks_id, ~] = ind2sub(size(obj.orderVector), card_id);
             
             % Extract the information
-            rank = cell(1, numel(ranks_index));
-            for i = 1:numel(ranks_index) % The loop allows card_id to ve a vector
+            ranks = cell(1, numel(ranks_id));
+            for i = 1:numel(ranks_id) % The loop allows card_id to ve a vector
                 if card_id(i) <= obj.nCards - obj.nJokers
-                    rank{i} = obj.ranks{ranks_index(i)};
+                    ranks{i} = obj.ranks{ranks_id(i)};
                 else
-                    rank{i} = '';
+                    ranks{i} = '';
                 end
             end
         end
         
-        function suit = GetSuit(obj, card_id)
+        function [suits, suits_id] = GetSuit(obj, card_id)
             %GETSUIT Returns the suit of the card(s) identified by the
             %card_id(s)
             
             % Use modular arithmetics to identify the suit using only the
             % id
-            [~, suits_index] = ind2sub(size(obj.orderVector), card_id);
+            [~, suits_id] = ind2sub(size(obj.orderVector), card_id);
             
             % Extract the information
-            suit = cell(1, numel(suits_index));
-            for i = 1:numel(suits_index) % The loop allows card_id to ve a vector
+            suits = cell(1, numel(suits_id));
+            for i = 1:numel(suits_id) % The loop allows card_id to ve a vector
                 if card_id(i) <= obj.nCards - obj.nJokers
-                    suit{i} = obj.suits{suits_index(i)};
+                    suits{i} = obj.suits{suits_id(i)};
                 else
-                    suit{i} = 'Joker';
+                    suits{i} = 'Joker';
                 end
             end
         end
